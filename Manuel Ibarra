@@ -1,0 +1,794 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Guía Completa de Servidores Dell PowerEdge</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        .server-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+        }
+        .tab-content {
+            display: none;
+        }
+        .tab-content.active {
+            display: block;
+            animation: fadeIn 0.5s;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        .command-card {
+            background: linear-gradient(135deg, #f5f7fa 0%, #e4e8eb 100%);
+            border-left: 4px solid #0076CE;
+        }
+        .nav-item.active {
+            border-bottom: 3px solid #0076CE;
+            color: #0076CE;
+        }
+        .scrollspy {
+            position: relative;
+        }
+        .scrollspy-content {
+            position: relative;
+        }
+        .scrollspy-nav {
+            position: sticky;
+            top: 20px;
+        }
+    </style>
+</head>
+<body class="bg-gray-50 font-sans">
+    <!-- Header -->
+    <header class="bg-blue-800 text-white shadow-lg">
+        <div class="container mx-auto px-6 py-8">
+            <div class="flex flex-col md:flex-row justify-between items-center">
+                <div class="flex items-center mb-6 md:mb-0">
+                    <i class="fas fa-server text-4xl mr-4"></i>
+                    <div>
+                        <h1 class="text-3xl font-bold">Dell PowerEdge</h1>
+                        <p class="text-blue-200">Guía Completa de Servidores</p>
+                    </div>
+                </div>
+                <nav class="flex space-x-1 md:space-x-4">
+                    <a href="#introduccion" class="px-3 py-2 rounded hover:bg-blue-700 transition">Introducción</a>
+                    <a href="#modelos" class="px-3 py-2 rounded hover:bg-blue-700 transition">Modelos</a>
+                    <a href="#mantenimiento" class="px-3 py-2 rounded hover:bg-blue-700 transition">Mantenimiento</a>
+                    <a href="#idrac" class="px-3 py-2 rounded hover:bg-blue-700 transition">iDRAC</a>
+                    <a href="#cmd" class="px-3 py-2 rounded hover:bg-blue-700 transition">CMD</a>
+                </nav>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="container mx-auto px-6 py-8">
+        <!-- Introduction Section -->
+        <section id="introduccion" class="mb-16 scroll-mt-20">
+            <div class="bg-white rounded-lg shadow-md p-8">
+                <h2 class="text-2xl font-bold text-gray-800 mb-6 flex items-center">
+                    <i class="fas fa-info-circle text-blue-600 mr-3"></i> Introducción a los Servidores Dell PowerEdge
+                </h2>
+                <div class="grid md:grid-cols-2 gap-8">
+                    <div>
+                        <p class="text-gray-700 mb-4">Los servidores Dell PowerEdge son una línea de servidores empresariales diseñados para ofrecer rendimiento, confiabilidad y escalabilidad para entornos de centro de datos.</p>
+                        <p class="text-gray-700 mb-4">Esta guía cubre todo lo que necesitas saber sobre los servidores PowerEdge, desde modelos y especificaciones hasta mantenimiento, instalación de sistemas operativos, uso de iDRAC y comandos esenciales.</p>
+                        <div class="bg-blue-50 border-l-4 border-blue-500 p-4 mb-4">
+                            <p class="font-semibold text-blue-800">¿Por qué elegir Dell PowerEdge?</p>
+                            <ul class="list-disc pl-5 mt-2 text-gray-700">
+                                <li class="mb-1">Diseño optimizado para cargas de trabajo críticas</li>
+                                <li class="mb-1">Tecnología iDRAC para gestión remota</li>
+                                <li class="mb-1">Amplia gama de modelos para diferentes necesidades</li>
+                                <li>Soporte técnico de Dell disponible 24/7</li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div>
+                        <img src="https://i.dell.com/sites/csimages/Product_Imagery/all/fy22-poweredge-family-shot.png" alt="Dell PowerEdge Servers" class="rounded-lg shadow-md w-full h-auto">
+                        <p class="text-sm text-gray-500 mt-2 text-center">Familia de servidores Dell PowerEdge</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Server Models Section -->
+        <section id="modelos" class="mb-16 scroll-mt-20">
+            <div class="bg-white rounded-lg shadow-md p-8">
+                <h2 class="text-2xl font-bold text-gray-800 mb-6 flex items-center">
+                    <i class="fas fa-list-ol text-blue-600 mr-3"></i> Modelos de Servidores PowerEdge
+                </h2>
+                
+                <div class="mb-8">
+                    <h3 class="text-xl font-semibold text-gray-700 mb-4">Series y Generaciones</h3>
+                    <p class="text-gray-700 mb-4">Los servidores PowerEdge se dividen en varias series según su factor de forma y propósito:</p>
+                    
+                    <div class="grid md:grid-cols-3 gap-6">
+                        <!-- Tower Servers -->
+                        <div class="server-card bg-white border border-gray-200 rounded-lg p-6 transition duration-300">
+                            <div class="flex items-center mb-4">
+                                <i class="fas fa-tower-broadcast text-3xl text-blue-600 mr-3"></i>
+                                <h4 class="text-lg font-bold text-gray-800">Torre (T-Series)</h4>
+                            </div>
+                            <p class="text-gray-700 mb-3">Servidores independientes ideales para oficinas o entornos sin rack.</p>
+                            <ul class="text-sm text-gray-600 space-y-1">
+                                <li><span class="font-semibold">Modelos:</span> T150, T350, T550, T650</li>
+                                <li><span class="font-semibold">Uso:</span> Pequeñas empresas, aplicaciones locales</li>
+                                <li><span class="font-semibold">Ventaja:</span> Fácil implementación, bajo ruido</li>
+                            </ul>
+                        </div>
+                        
+                        <!-- Rack Servers -->
+                        <div class="server-card bg-white border border-gray-200 rounded-lg p-6 transition duration-300">
+                            <div class="flex items-center mb-4">
+                                <i class="fas fa-server text-3xl text-blue-600 mr-3"></i>
+                                <h4 class="text-lg font-bold text-gray-800">Rack (R-Series)</h4>
+                            </div>
+                            <p class="text-gray-700 mb-3">Servidores de rack estándar para centros de datos.</p>
+                            <ul class="text-sm text-gray-600 space-y-1">
+                                <li><span class="font-semibold">Modelos:</span> R250, R350, R450, R550, R650, R650xs, R750, R750xa, R760, R760xa</li>
+                                <li><span class="font-semibold">Uso:</span> Virtualización, bases de datos, aplicaciones empresariales</li>
+                                <li><span class="font-semibold">Ventaja:</span> Alta densidad, escalabilidad</li>
+                            </ul>
+                        </div>
+                        
+                        <!-- Modular Servers -->
+                        <div class="server-card bg-white border border-gray-200 rounded-lg p-6 transition duration-300">
+                            <div class="flex items-center mb-4">
+                                <i class="fas fa-cubes text-3xl text-blue-600 mr-3"></i>
+                                <h4 class="text-lg font-bold text-gray-800">Modular (MX-Series)</h4>
+                            </div>
+                            <p class="text-gray-700 mb-3">Solución modular para infraestructuras dinámicas.</p>
+                            <ul class="text-sm text-gray-600 space-y-1">
+                                <li><span class="font-semibold">Modelos:</span> MX760c, MX750c, MX740c</li>
+                                <li><span class="font-semibold">Uso:</span> Nube, HCI, cargas de trabajo cambiantes</li>
+                                <li><span class="font-semibold">Ventaja:</span> Flexibilidad, reconfiguración sin herramientas</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Detailed Models Table -->
+                <div>
+                    <h3 class="text-xl font-semibold text-gray-700 mb-4">Especificaciones por Modelo</h3>
+                    <div class="overflow-x-auto">
+                        <table class="min-w-full bg-white border border-gray-200">
+                            <thead class="bg-gray-100">
+                                <tr>
+                                    <th class="py-3 px-4 border-b text-left">Modelo</th>
+                                    <th class="py-3 px-4 border-b text-left">Procesadores</th>
+                                    <th class="py-3 px-4 border-b text-left">RAM Máx.</th>
+                                    <th class="py-3 px-4 border-b text-left">Almacenamiento</th>
+                                    <th class="py-3 px-4 border-b text-left">Uso Recomendado</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <!-- T-Series -->
+                                <tr class="hover:bg-gray-50">
+                                    <td class="py-3 px-4 border-b">PowerEdge T150</td>
+                                    <td class="py-3 px-4 border-b">1x Intel Xeon E-2300</td>
+                                    <td class="py-3 px-4 border-b">128GB</td>
+                                    <td class="py-3 px-4 border-b">4x 3.5" o 8x 2.5"</td>
+                                    <td class="py-3 px-4 border-b">Oficinas pequeñas, archivos</td>
+                                </tr>
+                                <tr class="hover:bg-gray-50">
+                                    <td class="py-3 px-4 border-b">PowerEdge T650</td>
+                                    <td class="py-3 px-4 border-b">2x Intel Xeon Silver/Gold</td>
+                                    <td class="py-3 px-4 border-b">2TB</td>
+                                    <td class="py-3 px-4 border-b">16x 3.5" o 32x 2.5"</td>
+                                    <td class="py-3 px-4 border-b">Virtualización, bases de datos</td>
+                                </tr>
+                                
+                                <!-- R-Series -->
+                                <tr class="hover:bg-gray-50">
+                                    <td class="py-3 px-4 border-b">PowerEdge R250</td>
+                                    <td class="py-3 px-4 border-b">1x Intel Xeon E-2300</td>
+                                    <td class="py-3 px-4 border-b">128GB</td>
+                                    <td class="py-3 px-4 border-b">4x 3.5" o 8x 2.5"</td>
+                                    <td class="py-3 px-4 border-b">Edge computing, redes</td>
+                                </tr>
+                                <tr class="hover:bg-gray-50">
+                                    <td class="py-3 px-4 border-b">PowerEdge R750</td>
+                                    <td class="py-3 px-4 border-b">2x Intel Xeon 3rd Gen</td>
+                                    <td class="py-3 px-4 border-b">6TB</td>
+                                    <td class="py-3 px-4 border-b">24x 2.5" o 12x 3.5"</td>
+                                    <td class="py-3 px-4 border-b">Virtualización empresarial</td>
+                                </tr>
+                                <tr class="hover:bg-gray-50">
+                                    <td class="py-3 px-4 border-b">PowerEdge R760xa</td>
+                                    <td class="py-3 px-4 border-b">2x Intel Xeon 4th Gen</td>
+                                    <td class="py-3 px-4 border-b">8TB</td>
+                                    <td class="py-3 px-4 border-b">24x 2.5" NVMe</td>
+                                    <td class="py-3 px-4 border-b">IA, aprendizaje automático</td>
+                                </tr>
+                                
+                                <!-- MX-Series -->
+                                <tr class="hover:bg-gray-50">
+                                    <td class="py-3 px-4 border-b">PowerEdge MX750c</td>
+                                    <td class="py-3 px-4 border-b">2x Intel Xeon Scalable</td>
+                                    <td class="py-3 px-4 border-b">6TB por nodo</td>
+                                    <td class="py-3 px-4 border-b">Hasta 12x 2.5" por nodo</td>
+                                    <td class="py-3 px-4 border-b">Infraestructura composable</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <p class="text-sm text-gray-500 mt-2">* Especificaciones pueden variar según configuración. Consulte la documentación oficial para detalles exactos.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Maintenance Section -->
+        <section id="mantenimiento" class="mb-16 scroll-mt-20">
+            <div class="bg-white rounded-lg shadow-md p-8">
+                <h2 class="text-2xl font-bold text-gray-800 mb-6 flex items-center">
+                    <i class="fas fa-tools text-blue-600 mr-3"></i> Mantenimiento de Servidores PowerEdge
+                </h2>
+                
+                <div class="grid md:grid-cols-2 gap-8">
+                    <div>
+                        <h3 class="text-xl font-semibold text-gray-700 mb-4">Mantenimiento Preventivo</h3>
+                        
+                        <div class="space-y-4">
+                            <div class="p-4 border border-gray-200 rounded-lg">
+                                <h4 class="font-bold text-gray-800 mb-2 flex items-center">
+                                    <i class="fas fa-fan text-blue-500 mr-2"></i> Limpieza Física
+                                </h4>
+                                <ul class="list-disc pl-5 text-gray-700">
+                                    <li class="mb-1">Limpie el polvo de ventiladores y rejillas cada 3-6 meses</li>
+                                    <li class="mb-1">Use aire comprimido para limpiar componentes internos</li>
+                                    <li>Verifique que no haya obstrucciones en los flujos de aire</li>
+                                </ul>
+                            </div>
+                            
+                            <div class="p-4 border border-gray-200 rounded-lg">
+                                <h4 class="font-bold text-gray-800 mb-2 flex items-center">
+                                    <i class="fas fa-temperature-high text-blue-500 mr-2"></i> Monitoreo Térmico
+                                </h4>
+                                <ul class="list-disc pl-5 text-gray-700">
+                                    <li class="mb-1">Revise temperaturas a través de iDRAC regularmente</li>
+                                    <li class="mb-1">Temperaturas normales: CPU 40-70°C, ambiente 10-35°C</li>
+                                    <li>Configure alertas por temperaturas anormales</li>
+                                </ul>
+                            </div>
+                            
+                            <div class="p-4 border border-gray-200 rounded-lg">
+                                <h4 class="font-bold text-gray-800 mb-2 flex items-center">
+                                    <i class="fas fa-battery-three-quarters text-blue-500 mr-2"></i> Batería y Fuentes de Poder
+                                </h4>
+                                <ul class="list-disc pl-5 text-gray-700">
+                                    <li class="mb-1">Verifique estado de batería CMOS cada año</li>
+                                    <li class="mb-1">Pruebe fuentes de poder redundantes periódicamente</li>
+                                    <li>Reemplace baterías cada 2-3 años</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div>
+                        <h3 class="text-xl font-semibold text-gray-700 mb-4">Instalación de Sistema Operativo</h3>
+                        
+                        <div class="mb-6">
+                            <h4 class="font-bold text-gray-800 mb-2">Métodos de Instalación</h4>
+                            <div class="space-y-3">
+                                <div class="flex items-start">
+                                    <div class="bg-blue-100 text-blue-800 rounded-full w-6 h-6 flex items-center justify-center mr-3 mt-1 flex-shrink-0">
+                                        <i class="fas fa-compact-disc text-sm"></i>
+                                    </div>
+                                    <div>
+                                        <p class="font-semibold">Medios físicos (USB/DVD)</p>
+                                        <p class="text-gray-700 text-sm">Cree medios de instalación usando Dell OS Deployment Tool</p>
+                                    </div>
+                                </div>
+                                
+                                <div class="flex items-start">
+                                    <div class="bg-blue-100 text-blue-800 rounded-full w-6 h-6 flex items-center justify-center mr-3 mt-1 flex-shrink-0">
+                                        <i class="fas fa-network-wired text-sm"></i>
+                                    </div>
+                                    <div>
+                                        <p class="font-semibold">PXE (Network Boot)</p>
+                                        <p class="text-gray-700 text-sm">Configure servidor WDS o equivalente para despliegue por red</p>
+                                    </div>
+                                </div>
+                                
+                                <div class="flex items-start">
+                                    <div class="bg-blue-100 text-blue-800 rounded-full w-6 h-6 flex items-center justify-center mr-3 mt-1 flex-shrink-0">
+                                        <i class="fas fa-cloud text-sm"></i>
+                                    </div>
+                                    <div>
+                                        <p class="font-semibold">iDRAC Virtual Media</p>
+                                        <p class="text-gray-700 text-sm">Monte imagen ISO remotamente a través de iDRAC</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div>
+                            <h4 class="font-bold text-gray-800 mb-2">Pasos para Instalación</h4>
+                            <ol class="list-decimal pl-5 space-y-2 text-gray-700">
+                                <li>Actualice BIOS y firmware usando Dell Repository Manager</li>
+                                <li>Configure RAID si es necesario (Ctrl+R durante el boot)</li>
+                                <li>Inicie desde medio de instalación</li>
+                                <li>Instale controladores Dell específicos para el modelo</li>
+                                <li>Complete configuración inicial del SO</li>
+                                <li>Instale OpenManage Server Administrator para gestión</li>
+                            </ol>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="mt-8">
+                    <h3 class="text-xl font-semibold text-gray-700 mb-4">Soporte Técnico Dell</h3>
+                    <div class="bg-blue-50 rounded-lg p-6">
+                        <div class="grid md:grid-cols-3 gap-6">
+                            <div>
+                                <h4 class="font-bold text-blue-800 mb-2 flex items-center">
+                                    <i class="fas fa-headset mr-2"></i> Contacto
+                                </h4>
+                                <ul class="text-gray-700 space-y-1">
+                                    <li>Soporte ProSupport: 1-877-671-3355</li>
+                                    <li>Soporte básico: 1-800-999-3355</li>
+                                    <li>Chat en vivo: support.dell.com</li>
+                                    <li>Email: enterprise_support@dell.com</li>
+                                </ul>
+                            </div>
+                            
+                            <div>
+                                <h4 class="font-bold text-blue-800 mb-2 flex items-center">
+                                    <i class="fas fa-tools mr-2"></i> Herramientas
+                                </h4>
+                                <ul class="text-gray-700 space-y-1">
+                                    <li>Dell SupportAssist: Diagnóstico automático</li>
+                                    <li>Dell EMC Repository Manager: Gestión de firmware</li>
+                                    <li>OpenManage Enterprise: Gestión centralizada</li>
+                                    <li>iDRAC Service Module: Integración con SO</li>
+                                </ul>
+                            </div>
+                            
+                            <div>
+                                <h4 class="font-bold text-blue-800 mb-2 flex items-center">
+                                    <i class="fas fa-file-alt mr-2"></i> Documentación
+                                </h4>
+                                <ul class="text-gray-700 space-y-1">
+                                    <li>Manuales de usuario y guías rápidas</li>
+                                    <li>Notas de versión de firmware</li>
+                                    <li>Matrices de compatibilidad</li>
+                                    <li>KB artículos y soluciones</li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="mt-4 text-center">
+                            <a href="https://www.dell.com/support" class="inline-flex items-center px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700 transition">
+                                <i class="fas fa-external-link-alt mr-2"></i> Portal de Soporte Dell
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- iDRAC Section -->
+        <section id="idrac" class="mb-16 scroll-mt-20">
+            <div class="bg-white rounded-lg shadow-md p-8">
+                <h2 class="text-2xl font-bold text-gray-800 mb-6 flex items-center">
+                    <i class="fas fa-network-wired text-blue-600 mr-3"></i> Guía Completa de iDRAC
+                </h2>
+                
+                <div class="mb-8">
+                    <h3 class="text-xl font-semibold text-gray-700 mb-4">¿Qué es iDRAC?</h3>
+                    <div class="grid md:grid-cols-3 gap-6">
+                        <div class="md:col-span-2">
+                            <p class="text-gray-700 mb-4">Integrated Dell Remote Access Controller (iDRAC) es una tecnología de gestión remota integrada en los servidores PowerEdge que permite administrar el servidor independientemente del sistema operativo.</p>
+                            <div class="bg-blue-50 border-l-4 border-blue-500 p-4">
+                                <p class="font-semibold text-blue-800">Funcionalidades clave:</p>
+                                <ul class="list-disc pl-5 mt-2 text-gray-700 space-y-1">
+                                    <li>Control remoto del servidor (consola KVM)</li>
+                                    <li>Monitoreo de hardware en tiempo real</li>
+                                    <li>Actualización de firmware</li>
+                                    <li>Configuración de RAID</li>
+                                    <li>Alertas y registros de eventos</li>
+                                    <li>Virtual Media (montar ISOs remotamente)</li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="flex items-center justify-center">
+                            <img src="https://i.dell.com/sites/csimages/Product_Imagery/all/fy22-idrac9-image.png" alt="iDRAC Interface" class="rounded-lg shadow-md max-h-48">
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="mb-8">
+                    <h3 class="text-xl font-semibold text-gray-700 mb-4">Versiones de iDRAC</h3>
+                    <div class="grid md:grid-cols-3 gap-4">
+                        <div class="border border-gray-200 rounded-lg p-4">
+                            <h4 class="font-bold text-gray-800 mb-2">iDRAC Express</h4>
+                            <ul class="text-sm text-gray-700 space-y-1">
+                                <li><i class="fas fa-check text-green-500 mr-1"></i> Funcionalidad básica de monitoreo</li>
+                                <li><i class="fas fa-check text-green-500 mr-1"></i> Alertas por email</li>
+                                <li><i class="fas fa-times text-red-500 mr-1"></i> Sin consola remota</li>
+                                <li><i class="fas fa-times text-red-500 mr-1"></i> Sin Virtual Media</li>
+                                <li class="text-xs text-gray-500 mt-2">Incluido en todos los servidores</li>
+                            </ul>
+                        </div>
+                        <div class="border border-gray-200 rounded-lg p-4">
+                            <h4 class="font-bold text-gray-800 mb-2">iDRAC Enterprise</h4>
+                            <ul class="text-sm text-gray-700 space-y-1">
+                                <li><i class="fas fa-check text-green-500 mr-1"></i> Consola KVM remota</li>
+                                <li><i class="fas fa-check text-green-500 mr-1"></i> Virtual Media</li>
+                                <li><i class="fas fa-check text-green-500 mr-1"></i> Redirección de puertos</li>
+                                <li><i class="fas fa-check text-green-500 mr-1"></i> Monitoreo avanzado</li>
+                                <li class="text-xs text-gray-500 mt-2">Requiere licencia adicional</li>
+                            </ul>
+                        </div>
+                        <div class="border border-gray-200 rounded-lg p-4">
+                            <h4 class="font-bold text-gray-800 mb-2">iDRAC9 (última versión)</h4>
+                            <ul class="text-sm text-gray-700 space-y-1">
+                                <li><i class="fas fa-check text-green-500 mr-1"></i> Interfaz HTML5 mejorada</li>
+                                <li><i class="fas fa-check text-green-500 mr-1"></i> Quick Sync 2 (Bluetooth)</li>
+                                <li><i class="fas fa-check text-green-500 mr-1"></i> Seguridad mejorada</li>
+                                <li><i class="fas fa-check text-green-500 mr-1"></i> Compatible con OpenManage</li>
+                                <li class="text-xs text-gray-500 mt-2">En servidores 14G y posteriores</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="mb-8">
+                    <h3 class="text-xl font-semibold text-gray-700 mb-4">Configuración Inicial</h3>
+                    <div class="bg-gray-50 border border-gray-200 rounded-lg p-6">
+                        <h4 class="font-bold text-gray-800 mb-3">Acceso a iDRAC</h4>
+                        <ol class="list-decimal pl-5 space-y-2 text-gray-700">
+                            <li>Durante el arranque, presione F2 para entrar en System Setup</li>
+                            <li>Navegue a iDRAC Settings</li>
+                            <li>Configure dirección IP (DHCP o estática)</li>
+                            <li>Establezca nombre de usuario y contraseña (usuario root por defecto)</li>
+                            <li>Habilite las funciones necesarias (KVM, Virtual Media, etc.)</li>
+                            <li>Guarde cambios y salga</li>
+                        </ol>
+                        
+                        <div class="mt-6 grid md:grid-cols-2 gap-6">
+                            <div>
+                                <h4 class="font-bold text-gray-800 mb-3">Acceso Web</h4>
+                                <p class="text-gray-700 mb-2">Una vez configurada la IP, acceda desde navegador:</p>
+                                <code class="bg-gray-200 px-2 py-1 rounded text-sm block mb-2">https://&lt;dirección-IP-iDRAC&gt;</code>
+                                <p class="text-gray-700 text-sm">Ejemplo: https://192.168.0.120</p>
+                            </div>
+                            <div>
+                                <h4 class="font-bold text-gray-800 mb-3">Credenciales por Defecto</h4>
+                                <table class="w-full text-sm">
+                                    <tr class="border-b">
+                                        <td class="py-2 font-semibold">Usuario</td>
+                                        <td class="py-2">root</td>
+                                    </tr>
+                                    <tr class="border-b">
+                                        <td class="py-2 font-semibold">Contraseña</td>
+                                        <td class="py-2">calvin</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="py-2 font-semibold">Puerto</td>
+                                        <td class="py-2">443 (HTTPS)</td>
+                                    </tr>
+                                </table>
+                                <p class="text-xs text-gray-500 mt-2">Cambie las credenciales por defecto inmediatamente</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div>
+                    <h3 class="text-xl font-semibold text-gray-700 mb-4">Funciones Avanzadas</h3>
+                    
+                    <div class="grid md:grid-cols-2 gap-6">
+                        <!-- Virtual Media -->
+                        <div class="border border-gray-200 rounded-lg p-5">
+                            <h4 class="font-bold text-gray-800 mb-3 flex items-center">
+                                <i class="fas fa-compact-disc text-blue-500 mr-2"></i> Virtual Media
+                            </h4>
+                            <p class="text-gray-700 mb-3">Permite montar imágenes ISO remotamente como si fueran medios físicos conectados al servidor.</p>
+                            <p class="font-semibold text-gray-800 mb-2">Pasos para usar:</p>
+                            <ol class="list-decimal pl-5 space-y-1 text-gray-700 text-sm">
+                                <li>Acceda a la consola virtual (botón "Launch Virtual Console")</li>
+                                <li>En el menú, seleccione "Virtual Media" > "Connect Virtual Media"</li>
+                                <li>Seleccione "Map CD/DVD" y elija la imagen ISO local</li>
+                                <li>Configure el servidor para bootear desde el CD/DVD virtual</li>
+                            </ol>
+                            <p class="text-xs text-gray-500 mt-3">Útil para instalar sistemas operativos o herramientas sin necesidad de medios físicos.</p>
+                        </div>
+                        
+                        <!-- Console Redirection -->
+                        <div class="border border-gray-200 rounded-lg p-5">
+                            <h4 class="font-bold text-gray-800 mb-3 flex items-center">
+                                <i class="fas fa-desktop text-blue-500 mr-2"></i> Consola Remota
+                            </h4>
+                            <p class="text-gray-700 mb-3">Acceso completo al servidor como si estuviera conectado directamente con teclado, video y mouse (KVM).</p>
+                            <p class="font-semibold text-gray-800 mb-2">Características:</p>
+                            <ul class="list-disc pl-5 space-y-1 text-gray-700 text-sm">
+                                <li>Resolución hasta 1920x1200</li>
+                                <li>Soporte para teclas especiales (F1-F12, Ctrl+Alt+Del)</li>
+                                <li>Transferencia de archivos entre local y remoto</li>
+                                <li>Modo de solo vista para monitoreo</li>
+                            </ul>
+                            <p class="text-xs text-gray-500 mt-3">Requiere iDRAC Enterprise y plugin Java o HTML5 (recomendado).</p>
+                        </div>
+                        
+                        <!-- Firmware Update -->
+                        <div class="border border-gray-200 rounded-lg p-5">
+                            <h4 class="font-bold text-gray-800 mb-3 flex items-center">
+                                <i class="fas fa-upload text-blue-500 mr-2"></i> Actualización de Firmware
+                            </h4>
+                            <p class="text-gray-700 mb-3">Actualice el firmware del servidor directamente desde iDRAC sin necesidad de reiniciar.</p>
+                            <p class="font-semibold text-gray-800 mb-2">Métodos:</p>
+                            <ul class="list-disc pl-5 space-y-1 text-gray-700 text-sm">
+                                <li><span class="font-semibold">Manual:</span> Suba archivos .exe o .d7 desde su computadora</li>
+                                <li><span class="font-semibold">Red:</span> Descargue directamente desde Dell</li>
+                                <li><span class="font-semibold">Repository:</span> Use un repositorio local de actualizaciones</li>
+                            </ul>
+                            <p class="text-xs text-gray-500 mt-3">Siempre haga backup antes de actualizar firmware crítico.</p>
+                        </div>
+                        
+                        <!-- Logs and Monitoring -->
+                        <div class="border border-gray-200 rounded-lg p-5">
+                            <h4 class="font-bold text-gray-800 mb-3 flex items-center">
+                                <i class="fas fa-chart-line text-blue-500 mr-2"></i> Monitoreo y Registros
+                            </h4>
+                            <p class="text-gray-700 mb-3">iDRAC recopila datos detallados sobre el estado del hardware.</p>
+                            <p class="font-semibold text-gray-800 mb-2">Datos disponibles:</p>
+                            <ul class="list-disc pl-5 space-y-1 text-gray-700 text-sm">
+                                <li>Temperaturas de componentes</li>
+                                <li>Estado de ventiladores y fuentes de poder</li>
+                                <li>Uso de CPU y memoria</li>
+                                <li>Errores de hardware (SEL - System Event Log)</li>
+                                <li>Histórico de métricas</li>
+                            </ul>
+                            <p class="text-xs text-gray-500 mt-3">Configure alertas por email para problemas críticos.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- CMD Section -->
+        <section id="cmd" class="mb-16 scroll-mt-20">
+            <div class="bg-white rounded-lg shadow-md p-8">
+                <h2 class="text-2xl font-bold text-gray-800 mb-6 flex items-center">
+                    <i class="fas fa-terminal text-blue-600 mr-3"></i> Comandos CMD para PowerEdge
+                </h2>
+                
+                <div class="mb-8">
+                    <h3 class="text-xl font-semibold text-gray-700 mb-4">Comandos Básicos de Diagnóstico</h3>
+                    
+                    <div class="grid md:grid-cols-2 gap-6">
+                        <!-- Hardware Info -->
+                        <div class="command-card p-5 rounded-lg">
+                            <h4 class="font-bold text-gray-800 mb-3 flex items-center">
+                                <i class="fas fa-microchip text-blue-500 mr-2"></i> Información de Hardware
+                            </h4>
+                            <code class="bg-gray-800 text-gray-100 px-3 py-2 rounded block mb-2 overflow-x-auto">wmic computersystem get model,name,manufacturer,systemtype</code>
+                            <p class="text-gray-700 text-sm mb-2">Muestra modelo, nombre, fabricante y tipo de sistema.</p>
+                            <code class="bg-gray-800 text-gray-100 px-3 py-2 rounded block mb-2 overflow-x-auto">wmic memorychip get capacity,manufacturer,partnumber,speed</code>
+                            <p class="text-gray-700 text-sm">Detalles sobre módulos de memoria instalados.</p>
+                        </div>
+                        
+                        <!-- Disk Info -->
+                        <div class="command-card p-5 rounded-lg">
+                            <h4 class="font-bold text-gray-800 mb-3 flex items-center">
+                                <i class="fas fa-hdd text-blue-500 mr-2"></i> Información de Discos
+                            </h4>
+                            <code class="bg-gray-800 text-gray-100 px-3 py-2 rounded block mb-2 overflow-x-auto">wmic diskdrive get model,size,interfacetype,mediaType</code>
+                            <p class="text-gray-700 text-sm mb-2">Lista todos los discos con modelo, tamaño y tipo.</p>
+                            <code class="bg-gray-800 text-gray-100 px-3 py-2 rounded block mb-2 overflow-x-auto">wmic volume get name,capacity,freespace</code>
+                            <p class="text-gray-700 text-sm">Espacio usado y disponible en cada volumen.</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="mb-8">
+                    <h3 class="text-xl font-semibold text-gray-700 mb-4">Comandos Avanzados para PowerEdge</h3>
+                    
+                    <div class="grid md:grid-cols-2 gap-6">
+                        <!-- RAID Management -->
+                        <div class="command-card p-5 rounded-lg">
+                            <h4 class="font-bold text-gray-800 mb-3 flex items-center">
+                                <i class="fas fa-layer-group text-blue-500 mr-2"></i> Gestión de RAID
+                            </h4>
+                            <p class="text-gray-700 text-sm mb-2">Para servidores con controladores PERC (PowerEdge RAID Controller):</p>
+                            <code class="bg-gray-800 text-gray-100 px-3 py-2 rounded block mb-2 overflow-x-auto">MegaCli64 -LDInfo -Lall -aALL</code>
+                            <p class="text-gray-700 text-sm mb-2">Muestra información de los volúmenes lógicos RAID.</p>
+                            <code class="bg-gray-800 text-gray-100 px-3 py-2 rounded block mb-2 overflow-x-auto">MegaCli64 -PDList -aALL</code>
+                            <p class="text-gray-700 text-sm">Lista todos los discos físicos detectados por el controlador.</p>
+                        </div>
+                        
+                        <!-- iDRAC from CMD -->
+                        <div class="command-card p-5 rounded-lg">
+                            <h4 class="font-bold text-gray-800 mb-3 flex items-center">
+                                <i class="fas fa-network-wired text-blue-500 mr-2"></i> Interacción con iDRAC
+                            </h4>
+                            <p class="text-gray-700 text-sm mb-2">Usando racadm para gestionar iDRAC desde línea de comandos:</p>
+                            <code class="bg-gray-800 text-gray-100 px-3 py-2 rounded block mb-2 overflow-x-auto">racadm getsysinfo</code>
+                            <p class="text-gray-700 text-sm mb-2">Obtiene información del sistema desde iDRAC.</p>
+                            <code class="bg-gray-800 text-gray-100 px-3 py-2 rounded block mb-2 overflow-x-auto">racadm help</code>
+                            <p class="text-gray-700 text-sm">Muestra todos los comandos disponibles en racadm.</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div>
+                    <h3 class="text-xl font-semibold text-gray-700 mb-4">Scripts Útiles para Mantenimiento</h3>
+                    
+                    <div class="grid md:grid-cols-2 gap-6">
+                        <!-- Health Check -->
+                        <div class="command-card p-5 rounded-lg">
+                            <h4 class="font-bold text-gray-800 mb-3 flex items-center">
+                                <i class="fas fa-heartbeat text-blue-500 mr-2"></i> Chequeo de Salud
+                            </h4>
+                            <p class="text-gray-700 text-sm mb-2">Script para verificar estado básico del servidor:</p>
+                            <pre class="bg-gray-800 text-gray-100 p-3 rounded block mb-2 overflow-x-auto text-sm">
+@echo off
+echo === Información del Sistema ===
+wmic computersystem get model,name,manufacturer
+echo.
+echo === Estado de la Memoria ===
+wmic OS get FreePhysicalMemory,TotalVisibleMemorySize /Value
+echo.
+echo === Uso de CPU ===
+wmic cpu get loadpercentage
+echo.
+echo === Discos y Volúmenes ===
+wmic diskdrive get model,size
+wmic volume get name,freespace,capacity
+pause</pre>
+                            <p class="text-gray-700 text-sm">Guarde como healthcheck.bat y ejecute como administrador.</p>
+                        </div>
+                        
+                        <!-- iDRAC Config -->
+                        <div class="command-card p-5 rounded-lg">
+                            <h4 class="font-bold text-gray-800 mb-3 flex items-center">
+                                <i class="fas fa-cog text-blue-500 mr-2"></i> Configuración iDRAC
+                            </h4>
+                            <p class="text-gray-700 text-sm mb-2">Script para configurar parámetros básicos de iDRAC:</p>
+                            <pre class="bg-gray-800 text-gray-100 p-3 rounded block mb-2 overflow-x-auto text-sm">
+@echo off
+set /p idrac_ip=Ingrese IP de iDRAC: 
+set /p new_user=Ingrese nuevo usuario: 
+set /p new_pass=Ingrese nueva contraseña: 
+
+racadm -r %idrac_ip% -u root -p calvin config -g cfgUserAdmin -o cfgUserAdminUserName -i 2 %new_user%
+racadm -r %idrac_ip% -u root -p calvin config -g cfgUserAdmin -o cfgUserAdminPassword -i 2 %new_pass%
+racadm -r %idrac_ip% -u root -p calvin config -g cfgLanNetworking -o cfgNicEnable 1
+racadm -r %idrac_ip% -u root -p calvin config -g cfgRemoteHosts -o cfgRhostsSmtpServerIpAddr "smtp.sudominio.com"
+
+echo Configuración completada.
+pause</pre>
+                            <p class="text-gray-700 text-sm">Requiere racadm instalado y credenciales actuales.</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="mt-8 bg-yellow-50 border-l-4 border-yellow-400 p-4 rounded">
+                    <h4 class="font-bold text-yellow-800 mb-2 flex items-center">
+                        <i class="fas fa-exclamation-triangle mr-2"></i> Precauciones
+                    </h4>
+                    <ul class="list-disc pl-5 text-yellow-800 text-sm space-y-1">
+                        <li>Siempre verifique comandos antes de ejecutarlos en producción</li>
+                        <li>Use cuentas con privilegios mínimos necesarios</li>
+                        <li>Haga backup de configuraciones antes de cambios importantes</li>
+                        <li>Algunos comandos requieren herramientas adicionales (MegaCli64, racadm)</li>
+                        <li>Consulte la documentación oficial de Dell para su modelo específico</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-gray-800 text-white py-8">
+        <div class="container mx-auto px-6">
+            <div class="grid md:grid-cols-4 gap-8">
+                <div>
+                    <h3 class="text-lg font-semibold mb-4">Dell PowerEdge</h3>
+                    <p class="text-gray-400 text-sm">Guía completa de servidores Dell PowerEdge para administradores de sistemas y técnicos.</p>
+                </div>
+                <div>
+                    <h3 class="text-lg font-semibold mb-4">Recursos</h3>
+                    <ul class="space-y-2">
+                        <li><a href="https://www.dell.com/support" class="text-gray-400 hover:text-white text-sm">Soporte Dell</a></li>
+                        <li><a href="https://www.dell.com/support/manuals" class="text-gray-400 hover:text-white text-sm">Manuales y Documentación</a></li>
+                        <li><a href="https://www.dell.com/community/PowerEdge/ct-p/PowerEdge" class="text-gray-400 hover:text-white text-sm">Comunidad PowerEdge</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h3 class="text-lg font-semibold mb-4">Herramientas</h3>
+                    <ul class="space-y-2">
+                        <li><a href="https://www.dell.com/support/home/en-us/drivers/ossupport/ossupport" class="text-gray-400 hover:text-white text-sm">Descargas de Drivers</a></li>
+                        <li><a href="https://www.dell.com/support/home/en-us/product-support/product/poweredge-t650/drivers" class="text-gray-400 hover:text-white text-sm">Dell Repository Manager</a></li>
+                        <li><a href="https://www.dell.com/support/home/en-us/product-support/product/openmanage-enterprise/drivers" class="text-gray-400 hover:text-white text-sm">OpenManage Enterprise</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h3 class="text-lg font-semibold mb-4">Contacto</h3>
+                    <ul class="space-y-2">
+                        <li class="text-gray-400 text-sm">Soporte Enterprise: 1-877-671-3355</li>
+                        <li class="text-gray-400 text-sm">Soporte Básico: 1-800-999-3355</li>
+                        <li class="text-gray-400 text-sm">enterprise_support@dell.com</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="border-t border-gray-700 mt-8 pt-6 text-center text-gray-400 text-sm">
+                <p>© 2023 Guía de Servidores Dell PowerEdge. Este sitio no está afiliado a Dell Technologies.</p>
+                <p class="mt-2">Para información oficial, visite <a href="https://www.dell.com" class="text-blue-400 hover:underline">www.dell.com</a></p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Back to Top Button -->
+    <button id="backToTop" class="fixed bottom-6 right-6 bg-blue-600 text-white p-3 rounded-full shadow-lg opacity-0 invisible transition-all duration-300">
+        <i class="fas fa-arrow-up"></i>
+    </button>
+
+    <script>
+        // Back to Top Button
+        const backToTopButton = document.getElementById('backToTop');
+        
+        window.addEventListener('scroll', () => {
+            if (window.pageYOffset > 300) {
+                backToTopButton.classList.remove('opacity-0', 'invisible');
+                backToTopButton.classList.add('opacity-100', 'visible');
+            } else {
+                backToTopButton.classList.remove('opacity-100', 'visible');
+                backToTopButton.classList.add('opacity-0', 'invisible');
+            }
+        });
+        
+        backToTopButton.addEventListener('click', () => {
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
+            });
+        });
+        
+        // Smooth scrolling for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                e.preventDefault();
+                
+                const targetId = this.getAttribute('href');
+                const targetElement = document.querySelector(targetId);
+                
+                if (targetElement) {
+                    window.scrollTo({
+                        top: targetElement.offsetTop - 20,
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+        
+        // Tab functionality
+        const tabs = document.querySelectorAll('.nav-item');
+        const tabContents = document.querySelectorAll('.tab-content');
+        
+        tabs.forEach(tab => {
+            tab.addEventListener('click', () => {
+                // Remove active class from all tabs and contents
+                tabs.forEach(t => t.classList.remove('active'));
+                tabContents.forEach(c => c.classList.remove('active'));
+                
+                // Add active class to clicked tab and corresponding content
+                tab.classList.add('active');
+                const tabId = tab.getAttribute('data-tab');
+                document.getElementById(tabId).classList.add('active');
+            });
+        });
+        
+        // Initialize first tab as active
+        if (tabs.length > 0) {
+            tabs[0].classList.add('active');
+            const firstTabId = tabs[0].getAttribute('data-tab');
+            document.getElementById(firstTabId).classList.add('active');
+        }
+    </script>
+</body>
+</html>
